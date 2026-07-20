@@ -2,9 +2,6 @@
 
 An end-to-end portfolio project demonstrating how a fictional Australian community services organisation could transform Actionstep-like operational extracts into governed, DEX-aligned reporting data and Power BI management insights.
 
-> **Portfolio simulation only:** This repository contains synthetic and de-identified data. It contains no NAAFLS information, real client data, production Actionstep data, production DEX data, or protected addresses. The project applies DEX-aligned concepts for learning and analysis but is **not** an upload-ready DEX submission.
-
-![Executive Overview dashboard](docs/images/01-executive-overview.png)
 
 ## Project Overview
 
@@ -153,19 +150,22 @@ The cleaning workflow preserved the original source exports and created separate
 - All reconciliation groups returned **zero unexplained variance**.
 - Late data entry was the largest issue category, followed by missing SCORE follow-up and reporting-status mismatches.
 
-![Data quality issue register](docs/images/05-data-quality-register.png)
+<img width="2592" height="277" alt="05-data-quality-register" src="https://github.com/user-attachments/assets/3c819d86-1135-4a3f-9bc8-8461ab593e3b" />
+
 
 ### Source-to-report mapping
 
 The mapping register documents the source field, target field, transformation rule, validation rule, mandatory-field status, sensitivity and business owner.
 
-![Source-to-report field mapping](docs/images/06-field-mapping.png)
+<img width="1960" height="277" alt="06-field-mapping" src="https://github.com/user-attachments/assets/f8b39bdf-6b85-4f00-9a19-0e7fe829f5e6" />
+
 
 ### Reconciliation
 
 The reconciliation layer explains the difference between raw source activities and submitted/reporting-ready records through duplicate, non-reportable, excluded and pending-confirmation counts.
 
-![Source-to-report reconciliation](docs/images/07-reconciliation.png)
+<img width="1944" height="277" alt="07-reconciliation" src="https://github.com/user-attachments/assets/c83d8764-e3c1-41be-a998-609be2010fdc" />
+
 
 ## Power BI Data Model
 
@@ -214,25 +214,29 @@ Full-period findings illustrated by the simulation include:
 - Face-to-face delivery represented 41.5% of sessions.
 - Monthly service volume was highest in May–June 2026.
 
-![Executive Overview](docs/images/01-executive-overview.png)
+<img width="640" height="358" alt="image" src="https://github.com/user-attachments/assets/79b03345-6402-4c8c-8292-6a3a1c35d7c0" />
+
 
 ### 2. Service Delivery
 
 Examines monthly session outcomes, service settings, average duration by delivery method and weekday demand. The page supports workload planning and comparison of office, community, remote and virtual delivery.
 
-![Service Delivery dashboard](docs/images/02-service-delivery.png)
+<img width="629" height="350" alt="image" src="https://github.com/user-attachments/assets/f4ab30af-32f8-4964-9fbe-81ee57123512" />
+
 
 ### 3. Client & Case Profile
 
 Analyses presenting needs, assessed risk, age and gender distribution, and service pathways. A summary table shows priority or urgent cases, open cases and total cases by pathway.
 
-![Client and Case Profile dashboard](docs/images/03-client-case-profile.png)
+<img width="638" height="344" alt="image" src="https://github.com/user-attachments/assets/2e424b0c-13a5-47ca-91f4-7f45387c5d41" />
+
 
 ### 4. Referrals & Outcomes
 
 Tracks referral trends, referral status and referred service types, together with average SCORE results by domain and assessment stage. In the simulated data, 751 of 1,350 referrals were completed, representing a completion rate of 55.6%.
 
-![Referrals and Outcomes dashboard](docs/images/04-referrals-outcomes.png)
+<img width="635" height="358" alt="image" src="https://github.com/user-attachments/assets/4875cc8e-854e-497e-9e31-16dbff0653d8" />
+
 
 ## Illustrative Management Actions
 
