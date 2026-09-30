@@ -1,316 +1,237 @@
 # Community Services Data Quality & DEX Reporting Simulation
 
-An end-to-end portfolio project demonstrating how a fictional Australian community services organisation could transform Actionstep-like operational extracts into governed, DEX-aligned reporting data and Power BI management insights.
+**Using service data to support clear reporting, outreach planning and CRM adoption.**
 
+This portfolio case study explores how a fictional Australian community services organisation can turn client, case, service, referral and assessment records into reliable management information. It combines Excel and Power Query data preparation with Power BI reporting, and illustrates how those findings could inform communications and service planning.
 
-## Project Overview
+> **Simulation only.** The dataset is synthetic. This is not work commissioned by a legal service, an AIIM implementation, or a real funding submission. The original scenario uses Actionstep-like source structures and Northern Territory outlet labels; it does not represent WLSSA, its clients or South Australian service demand.
 
-Community services organisations often need to combine client, case, service, referral and outcome information from operational systems while meeting funding, audit, privacy and reporting requirements.
+## At a Glance
 
-This project simulates that workflow from source data to management reporting. It demonstrates:
-
-- Excel-based data cleaning and visible formula checks;
-- Power Query transformation and standardisation;
-- DEX-aligned client, case, session, outlet, referral and SCORE structures;
-- data quality identification, ownership and resolution tracking;
-- source-to-report reconciliation and audit history;
-- Power BI data modelling and DAX measures; and
-- decision-focused dashboards for program managers and service teams.
-
-## Business Questions
-
-The project was designed to answer five practical questions:
-
-1. How much service was delivered, and how did demand change over time?
-2. Which program activities, outlets, service settings and delivery methods carried the greatest workload?
-3. Which presenting needs, risk levels, age groups and service pathways characterised the client and case profile?
-4. What happened to referrals, and how did simulated SCORE results vary by domain and assessment stage?
-5. Which records were ready for reporting, which required review, and could every source-to-report variance be explained?
-
-## Project Scope
-
-| Item | Volume or scope |
-|---|---:|
+| Area | Scope |
+|---|---|
 | Reporting period | 1 July 2024 – 30 June 2026 |
-| Synthetic clients | 800 |
-| Cases | 1,100 |
-| Raw service activities | 5,065 |
-| Clean service sessions | 5,000 |
-| Referrals | 1,350 |
-| SCORE assessments | 1,800 |
-| Staff records | 48 |
-| Approved outlets | 5 |
-| Program activities | 5 |
-| Logged data quality issues | 694 |
-| Reporting-ready sessions | 3,820 |
-| Unexplained reconciliation variance | 0 |
+| Data scope | 800 synthetic client records, 1,100 cases and 1,350 referrals |
+| Service records | 5,065 raw activities reduced to 5,000 clean service-session records |
+| Quality controls | 694 logged issues; 3,820 sessions classified as reporting ready |
+| Reporting | Four Power BI pages covering services, client profiles, referrals and outcomes |
+| Tools | Excel, Power Query, Power BI and DAX |
+| Public materials | Case-study narrative and embedded screenshots in this README |
 
-## Tools and Skills
+**How to review this project:** start with the dashboard gallery and sample briefing below. The technical approach and metric definitions follow. The underlying workbooks, model and scripts are not currently published in this repository, so this page is a case-study showcase rather than a downloadable, reproducible project package.
 
-| Area | Tools and techniques |
-|---|---|
-| Data preparation | Microsoft Excel, formulas, lookup and logical checks, Power Query |
-| Data quality | duplicate detection, missing-value review, category standardisation, date validation, key matching and referential-integrity checks |
-| Reporting concepts | DEX-aligned records, reporting dispositions, outlet controls, SCORE assessments and reconciliation |
-| Data modelling | Power BI semantic model, 10 tables, 13 relationships and star-schema principles |
-| Analysis | 19 DAX measures, filtering, segmentation, trend analysis and outcome reporting |
-| Communication | executive summaries, operational dashboards, data dictionary, field mapping and audit documentation |
+## Relevance to Marketing and CRM Work
 
-## Data Architecture
+Service organisations need accurate information both to improve access and to explain their work. This project offers a foundation for the following tasks:
 
-```mermaid
-flowchart LR
-    A["Actionstep-like source extracts<br/>Contacts · Matters · Activities"]
-    B["Additional source extracts<br/>Referrals · SCORE assessments"]
-    C["Excel and Power Query<br/>cleaning and standardisation"]
-    D["Validation layer<br/>rules · issue register · field mapping"]
-    E["Clean reporting layer<br/>clients · cases · sessions · referrals · SCORE"]
-    F["Reconciliation and<br/>reporting-status history"]
-    G["Power BI semantic model<br/>7 dimensions · 3 facts"]
-    H["Management dashboards<br/>service · clients · referrals · outcomes"]
+| Responsibility | Evidence in the existing project | Application illustrated in this README |
+|---|---|---|
+| Prepare management and funder reports | Service, referral and assessment views; reporting-readiness checks | A concise briefing that separates activity, process measures and outcomes |
+| Inform community outreach | Client profiles, service pathways and delivery-method analysis | Questions and proposed actions to investigate access barriers |
+| Support CRM data quality | Field mapping, validation rules, issue ownership and reconciliation | A proposed staff guidance and issue-resolution workflow |
+| Communicate responsibly | Aggregated views and documented sensitivity considerations | Examples of internal versus public reporting |
+| Explain findings to non-technical readers | Dashboard summaries and metric definitions | Plain-English interpretation with explicit limitations |
 
-    A --> C
-    B --> C
-    C --> D
-    D --> E
-    D --> F
-    E --> G
-    F --> G
-    G --> H
-```
-
-### Data layers
-
-**Source layer**
-
-- Raw Contacts
-- Raw Matters
-- Raw Activities
-- Raw Referrals
-- Raw Assessments
-
-**Clean reporting layer**
-
-- Clients
-- Cases
-- Service Sessions
-- Referrals
-- SCORE Assessments
-
-**Reference layer**
-
-- Program Activities
-- Outlets
-- Staff
-- Reporting Periods
-
-**Quality, audit and documentation layer**
-
-- Data Quality Issues
-- Validation Rules
-- Field Mapping
-- Data Dictionary
-- Reconciliation
-- Reporting Status History
-
-## Data Cleaning and Quality Controls
-
-The cleaning workflow preserved the original source exports and created separate reporting-ready tables. The major steps were:
-
-1. Standardise identifiers, dates, text categories and status values.
-2. Detect duplicate client and service-activity records.
-3. Check mandatory fields and approved category lists.
-4. Validate client-to-case and case-to-session relationships.
-5. Map program activities and approved administrative outlets.
-6. Validate case, service, referral and assessment dates.
-7. Check SCORE completeness and valid value ranges.
-8. Assign each service session a reporting disposition.
-9. Log issues with severity, ownership, resolution status and preventive action.
-10. Reconcile source activities to clean, non-reportable, excluded, pending and reporting-ready records.
-
-### Example validation controls
-
-| Control | Purpose |
-|---|---|
-| Unique source and session identifiers | Prevent double counting |
-| Valid client and case keys | Prevent orphan records |
-| Approved program mapping | Support consistent program reporting |
-| Approved outlet mapping | Avoid client or protected addresses being used as service outlets |
-| Date sequencing | Ensure close dates, service dates and assessment dates are logically valid |
-| Mandatory-field checks | Identify incomplete reportable records |
-| SCORE range and follow-up checks | Support meaningful outcome reporting |
-| Entry-delay monitoring | Identify late data entry before reporting deadlines |
-
-### Data quality results
-
-- **65** duplicate raw service activities were identified before creation of the clean session table.
-- **694** quality issues were logged: 482 resolved, 118 in review, 59 open and 35 accepted as risk.
-- **3,820 sessions (76.4%)** were classified as reporting ready.
-- **1,039 sessions (20.8%)** were non-reportable, 122 required confirmation and 19 were excluded.
-- All reconciliation groups returned **zero unexplained variance**.
-- Late data entry was the largest issue category, followed by missing SCORE follow-up and reporting-status mismatches.
-
-<img width="2592" height="277" alt="05-data-quality-register" src="https://github.com/user-attachments/assets/3c819d86-1135-4a3f-9bc8-8461ab593e3b" />
-
-
-### Source-to-report mapping
-
-The mapping register documents the source field, target field, transformation rule, validation rule, mandatory-field status, sensitivity and business owner.
-
-<img width="1960" height="277" alt="06-field-mapping" src="https://github.com/user-attachments/assets/f8b39bdf-6b85-4f00-9a19-0e7fe829f5e6" />
-
-
-### Reconciliation
-
-The reconciliation layer explains the difference between raw source activities and submitted/reporting-ready records through duplicate, non-reportable, excluded and pending-confirmation counts.
-
-<img width="1944" height="277" alt="07-reconciliation" src="https://github.com/user-attachments/assets/c83d8764-e3c1-41be-a998-609be2010fdc" />
-
-
-## Power BI Data Model
-
-The semantic model contains three fact tables and seven dimensions connected through 13 many-to-one relationships.
-
-**Fact tables**
-
-- `Fact_ServiceSession`
-- `Fact_Referral`
-- `Fact_SCORE`
-
-**Dimension tables**
-
-- `Dim_Client`
-- `Dim_Case`
-- `Dim_Date`
-- `Dim_ProgramActivity`
-- `Dim_Outlet`
-- `Dim_Staff`
-- `Dim_ReportingPeriod`
-
-The model includes 19 DAX measures covering service sessions, clients served, cases supported, service hours, completion rates, referrals, referral completion, warm referrals and SCORE results.
-
-### Selected measure definitions
-
-| Measure | Definition |
-|---|---|
-| Service Sessions | Count of clean service-session rows |
-| Clients Served | Distinct clients linked to service sessions |
-| Cases Supported | Distinct cases linked to service sessions |
-| Completion Rate | Completed service sessions divided by total service sessions |
-| Referral Completion Rate | Completed referrals divided by total referrals |
-| Average SCORE | Mean simulated SCORE value in the current filter context |
+The outreach, communications and CRM adoption examples below are **proposed applications of the analysis**, not evidence of campaigns delivered, staff trained or a system deployed.
 
 ## Dashboard Gallery
 
 ### 1. Executive Overview
 
-Provides a management summary of service volume, client reach, cases supported, completion rate, monthly trends, program activity, outlet workload and delivery methods.
+Summarises service-session volume, clients linked to services, cases, completion rate, monthly patterns, programs, outlets and delivery methods.
 
-Full-period findings illustrated by the simulation include:
+The published simulation reports 5,000 clean service-session records. Legal Assistance and Advice accounts for 1,701 records, while the fictional Darwin Regional Hub accounts for 1,715. Face-to-face delivery represents 41.5% of records.
 
-- 5,000 service sessions were delivered across the two-year period.
-- Legal Assistance and Advice was the largest program activity with 1,701 sessions.
-- Darwin Regional Hub recorded the highest volume with 1,715 sessions.
-- Face-to-face delivery represented 41.5% of sessions.
-- Monthly service volume was highest in May–June 2026.
+These figures describe recorded activity. They do not establish population coverage, unmet need or the effect of marketing.
 
-<img width="640" height="358" alt="image" src="https://github.com/user-attachments/assets/79b03345-6402-4c8c-8292-6a3a1c35d7c0" />
-
+![Executive overview showing service volume, client reach, program and outlet activity, delivery methods and monthly trends](https://github.com/user-attachments/assets/79b03345-6402-4c8c-8292-6a3a1c35d7c0)
 
 ### 2. Service Delivery
 
-Examines monthly session outcomes, service settings, average duration by delivery method and weekday demand. The page supports workload planning and comparison of office, community, remote and virtual delivery.
+Compares recorded session outcomes, service settings, delivery methods, duration and weekday patterns. These views can help a service team discuss capacity before increasing promotion or referrals.
 
-<img width="629" height="350" alt="image" src="https://github.com/user-attachments/assets/f4ab30af-32f8-4964-9fbe-81ee57123512" />
+![Service delivery dashboard showing session outcomes, service settings and delivery patterns](https://github.com/user-attachments/assets/f4ab30af-32f8-4964-9fbe-81ee57123512)
 
+### 3. Client and Case Profile
 
-### 3. Client & Case Profile
+Shows presenting needs, assessed risk, age and gender distribution, and service pathways. These are internal planning views; a public version would require a separate disclosure review.
 
-Analyses presenting needs, assessed risk, age and gender distribution, and service pathways. A summary table shows priority or urgent cases, open cases and total cases by pathway.
+A smaller group in the dataset is a prompt for investigation, not proof that the community has less need or is underserved.
 
-<img width="638" height="344" alt="image" src="https://github.com/user-attachments/assets/2e424b0c-13a5-47ca-91f4-7f45387c5d41" />
+![Client and case profile dashboard showing presenting needs, risk categories, age and gender distribution, and pathways](https://github.com/user-attachments/assets/2e424b0c-13a5-47ca-91f4-7f45387c5d41)
 
+### 4. Referrals and Outcomes
 
-### 4. Referrals & Outcomes
+Shows referral status, referred service types and simulated SCORE values by domain and assessment stage. Of 1,350 referrals, 751 are recorded as completed: 55.6%.
 
-Tracks referral trends, referral status and referred service types, together with average SCORE results by domain and assessment stage. In the simulated data, 751 of 1,350 referrals were completed, representing a completion rate of 55.6%.
+Referral completion is a process measure. Average assessment scores alone do not establish improvement or demonstrate that services caused a change.
 
-<img width="635" height="358" alt="image" src="https://github.com/user-attachments/assets/4875cc8e-854e-497e-9e31-16dbff0653d8" />
+![Referrals and outcomes dashboard showing referral trends, status, service types and simulated SCORE assessments](https://github.com/user-attachments/assets/4875cc8e-854e-497e-9e31-16dbff0653d8)
 
+## Sample Management and Funder Briefing
 
-## Illustrative Management Actions
+*Illustrative wording based on the synthetic project figures; not an actual funding report.*
 
-Because the data is synthetic, the following are examples of how an organisation could translate the analysis into action rather than recommendations for any real service provider:
+During the two-year simulation, the dataset contained 5,000 clean service-session records and 1,350 referrals. Of those referrals, 751 were recorded as completed. Face-to-face delivery represented 41.5% of service-session records, highlighting the importance of considering in-person access alongside other delivery options.
 
-- plan staffing and service capacity around high-volume reporting periods;
-- review resource allocation across high-volume programs and outlets;
-- maintain blended delivery while protecting face-to-face and outreach capacity;
-- strengthen referral follow-up for accepted and open referrals;
-- provide practical staff support and validation prompts to reduce late data entry;
-- monitor SCORE follow-up completeness before reporting deadlines; and
-- review high, critical and not-assessed cases with program teams using culturally safe and privacy-conscious processes.
+Reporting checks classified 3,820 sessions as ready for reporting under the simulation's rules. Other records were non-reportable, awaiting confirmation or excluded. These categories should be explained separately: a non-reportable service is not automatically a data error or an unsuccessful service.
 
-## Privacy and Culturally Safe Reporting
+Three follow-up priorities emerge from the example:
 
-The project uses synthetic identifiers and aggregated dashboard outputs. A production implementation would also require organisational governance and consultation with program teams and Aboriginal and Torres Strait Islander stakeholders.
+1. Review outstanding referrals with service teams, including their age and status, before drawing conclusions about barriers.
+2. Address late entry and missing assessment follow-up through clearer recording guidance and assigned issue owners.
+3. Examine access patterns alongside community feedback, service capacity and relevant population or needs evidence before selecting an outreach priority.
 
-The simulated controls demonstrate the following principles:
+This briefing describes activity and recording quality. It does not claim improved legal outcomes, campaign effectiveness or compliance with a particular funding agreement.
 
-- do not publish names, street addresses or protected service locations;
-- do not use a client's home or refuge address as an outlet;
-- flag sensitive fields in the data dictionary and mapping register;
-- avoid inferring identity or demographic information when it is not stated;
-- consider suppression or aggregation for small client groups;
-- restrict access according to role and operational need; and
-- explain metric definitions, exclusions and limitations to report users.
+## From Findings to Outreach Planning
 
-## Repository Contents
+The following is a **planning framework**, not an implemented campaign or an additional dashboard.
 
-### Key project files
+| Existing signal | Question to investigate | Proposed action | How to evaluate |
+|---|---|---|---|
+| Differences between client groups or pathways | Do these patterns reflect eligibility, need, access barriers or recording gaps? | Consult service staff and relevant community representatives before selecting a priority audience | Agreed evidence of barriers and subsequent changes in appropriate enquiries |
+| Referrals recorded as open or accepted | Are referrals recent, awaiting support, incorrectly recorded or encountering barriers? | Review referral age and reasons; clarify follow-up responsibilities with partner services | Status completeness and completion within a defined follow-up period |
+| Substantial face-to-face activity | Which communication channels and formats help people access support safely? | Test accessible service information through appropriate community partners | Feedback on clarity and access; appropriate enquiries relative to capacity |
+| Late data entry | Does the reporting cycle omit recent activity? | Provide a short recording guide and reminders before reporting deadlines | Entry timeliness and unresolved recording issues |
 
-- [Main Excel data package](outputs/community_services_dex_reporting_simulation_20260717/Community_Services_Data_Quality_and_DEX_Reporting_Simulation.xlsx)
-- [Formula-driven data cleaning workbook](outputs/formula_cleaned_workbook_20260717/raw_data_formula_cleaned_with_visible_formulas.xlsx)
-- [Power BI-ready Excel dataset](outputs/powerbi_ready_20260718/DEXData_PowerBI_Ready.xlsx)
-- [Power BI project](outputs/powerbi_ready_20260718/Community_Services_DEX_Model/Community_Services_DEX_Model.pbip)
-- [Quality assurance summary](outputs/community_services_dex_reporting_simulation_20260717/QA_Summary.json)
-- [CSV data exports](outputs/community_services_dex_reporting_simulation_20260717/csv/)
+**Additional evidence needed:** inbound referral source, language or accessibility needs, suitable geographic groupings and community or population benchmarks are not demonstrated as outreach measures in the published gallery. They would need to be verified or added transparently as synthetic extensions.
 
-```text
-Community_Services_DEX_Data_Project/
-├── README.md
-├── docs/
-│   └── images/                         # Dashboard and workbook screenshots
-├── outputs/
-│   ├── community_services_dex_reporting_simulation_20260717/
-│   │   ├── Community_Services_Data_Quality_and_DEX_Reporting_Simulation.xlsx
-│   │   ├── QA_Summary.json
-│   │   └── csv/                        # Source, clean, reference and audit exports
-│   ├── formula_cleaned_workbook_20260717/
-│   │   └── raw_data_formula_cleaned_with_visible_formulas.xlsx
-│   └── powerbi_ready_20260718/
-│       ├── DEXData_PowerBI_Ready.xlsx
-│       └── Community_Services_DEX_Model/
-│           └── Community_Services_DEX_Model.pbip
-└── scripts/                             # Reproducible data and PBIP build utilities
+Outreach evaluation should distinguish awareness, enquiries, eligible referrals and services accessed. The current dataset does not include campaign exposure or marketing spend, so it cannot establish campaign conversion, attribution or return on investment.
+
+### Example of Plain-English Communications
+
+*Fictional portfolio wording; not public advice or approved organisational copy.*
+
+“Clear information and coordinated referrals can help people understand the support available to them. In this simulation, the reporting team reviews referral follow-up and service access patterns to identify questions for staff and community partners. Further consultation is needed before changing outreach priorities.”
+
+A real service announcement would also need verified eligibility information, an approved and safe contact method, accessible formats and appropriate review. A client story would require a separate consent and confidentiality process; no client story is inferred from these records.
+
+## CRM Adoption Support: Proposed Approach
+
+The existing field mapping and issue register provide a starting point for staff guidance. A practical rollout support package could include:
+
+| Material | Proposed content |
+|---|---|
+| One-page recording guide | Required fields, category definitions, date rules and examples of common errors |
+| Staff FAQ | Why fields matter, what to do when information is unknown, and where to obtain help |
+| Issue feedback process | Record the affected field and issue, assign an owner, track resolution and communicate updates through an approved internal channel |
+| Rollout checklist | Confirm responsibilities, test common workflows, check report totals and gather staff feedback |
+| Adoption review | Monitor recording timeliness, missing fields and recurring support questions |
+
+These materials have not been delivered to a real organisation as part of this project.
+
+**Transferability to AIIM:** field definitions, mapping, quality checks, reconciliation and user guidance are transferable concepts. This project does not use AIIM exports, validate an AIIM schema or demonstrate AIIM configuration. Any future implementation would need the actual system specifications and the organisation's reporting requirements. DEX requirements should not be assumed to apply to a prospective employer.
+
+## Privacy, Cultural Safety and Responsible Communication
+
+The project uses synthetic records. The following examples illustrate a proposed reporting approach, not a certification of legal compliance or proof that production access controls have been implemented.
+
+| Information | Internal use, subject to appropriate access | Public-facing treatment |
+|---|---|---|
+| Client and case identifiers | Used where necessary for validation and follow-up | Omitted |
+| Detailed risk and presenting-need information | Limited to authorised operational purposes | Excluded or carefully aggregated following review |
+| Small demographic groups | Reviewed for identification and interpretation risks | Combined, suppressed or omitted where necessary; check that totals do not reveal hidden values |
+| Protected addresses or locations | Handled only through authorised systems | Never included |
+| Service totals and referral measures | Shown with definitions and recording limitations | Released only with a clear period, denominator and approved explanation |
+
+A real reporting process would require an agreed disclosure approach, role-based access, appropriate retention arrangements and review by responsible staff. Removing names alone is not a sufficient reporting safeguard.
+
+Communication should use respectful language, avoid blame and sensational detail, and preserve people's choice about sharing their experiences. Cultural safety requires engagement with relevant communities, including Aboriginal and Torres Strait Islander stakeholders where appropriate; it cannot be established by a dashboard or wording checklist alone.
+
+## Data Preparation and Quality Controls
+
+The documented workflow preserves source records separately from reporting tables:
+
+1. Standardise identifiers, dates, categories and status values.
+2. Identify duplicate clients and service activities.
+3. Check required fields, category lists and record relationships.
+4. Map programs and approved administrative outlets.
+5. Validate service, referral and assessment date sequences.
+6. Check SCORE values and follow-up completeness.
+7. Assign reporting dispositions and log issues with owners.
+8. Reconcile raw activities with clean and reporting-ready records.
+
+### Results Recorded in the Simulation
+
+| Check | Reported result |
+|---|---:|
+| Duplicate raw activities removed | 65 |
+| Logged quality issues | 694 |
+| Issue statuses | 482 resolved; 118 in review; 59 open; 35 accepted as risk |
+| Reporting-ready sessions | 3,820 / 5,000 — 76.4% |
+| Non-reportable sessions | 1,039 |
+| Pending confirmation | 122 |
+| Excluded sessions | 19 |
+| Unexplained reconciliation variance | 0 |
+
+Issue counts and session counts use different units. One session can have more than one issue. Zero unexplained reconciliation variance means the accounting of records balances within the simulation; it does not prove that all data is correct or that a real submission would be accepted.
+
+### Quality Register
+
+![Sample quality register showing issue tracking and review information](https://github.com/user-attachments/assets/3c819d86-1135-4a3f-9bc8-8461ab593e3b)
+
+### Field Mapping
+
+The documented mapping includes source and target fields, transformation and validation rules, mandatory-field status, sensitivity and business ownership.
+
+![Sample source-to-report field mapping register](https://github.com/user-attachments/assets/f8b39bdf-6b85-4f00-9a19-0e7fe829f5e6)
+
+### Reconciliation
+
+The reconciliation separates duplicates, clean records and reporting dispositions. “Reporting ready” describes the simulated classification, not an actual submission.
+
+![Sample reconciliation of raw, clean and reporting-ready records](https://github.com/user-attachments/assets/c83d8764-e3c1-41be-a998-609be2010fdc)
+
+## Technical Approach and Metric Definitions
+
+The documented model comprises three fact tables and seven dimensions, with 13 relationships and 19 DAX measures.
+
+- **Facts:** Service Session, Referral and SCORE.
+- **Dimensions:** Client, Case, Date, Program Activity, Outlet, Staff and Reporting Period.
+- **Preparation:** Excel and Power Query.
+- **Analysis and presentation:** Power BI and DAX.
+
+```mermaid
+flowchart LR
+    A["Synthetic Actionstep-like records"] --> B["Excel and Power Query preparation"]
+    B --> C["Validation, mapping and issue tracking"]
+    C --> D["Clean reporting tables"]
+    C --> E["Reconciliation and reporting status"]
+    D --> F["Power BI model and four report pages"]
+    E --> F
+    F --> G["Management interpretation"]
+    G --> H["Proposed outreach and communications applications"]
 ```
 
-## Open the Project
+| Metric | Definition and interpretation |
+|---|---|
+| Client records | 800 synthetic clients in the dataset; not all necessarily linked to recorded services |
+| Clients served | Distinct clients linked to service-session records in the selected context; the published overview displays 597 |
+| Service sessions | 5,000 clean session records; includes different session outcomes and should not be described as 5,000 successfully completed services |
+| Cases | 1,100 case records in the dataset; distinguish this from cases linked to sessions and rounded dashboard labels |
+| Session completion rate | Completed sessions divided by total sessions in the selected context; separate from referral completion and reporting readiness |
+| Referral completion rate | 751 completed referrals / 1,350 referrals = 55.6% for the stated simulation scope; not a measure of legal success |
+| Reporting readiness | 3,820 reporting-ready sessions / 5,000 clean sessions = 76.4%, under the project's simulated rules |
+| Average SCORE | Mean simulated assessment value in the current context; not a matched measure of change |
 
-1. Download or clone this repository.
-2. Review the main Excel data package and the formula-driven cleaning workbook.
-3. Open `Community_Services_DEX_Model.pbip` in Power BI Desktop.
-4. If required, update the Power BI data-source path to the downloaded copy of `DEXData_PowerBI_Ready.xlsx`.
-5. Refresh the model and explore the four report pages using the financial-year, program and outlet filters.
+For a future outcome-change analysis, match the same client's assessments within the same domain and appropriate period, report the paired sample size and missing follow-up, and explain selection limitations. Separate averages across assessment stages should not be presented as evidence of individual improvement or causal impact.
 
-## Limitations
+## Project Contribution and Evidence
 
-- The dataset is synthetic and does not describe any real organisation, client or community.
-- The source tables are Actionstep-like simulations and were not extracted from an operational Actionstep environment.
-- The structure is DEX-aligned for portfolio learning but is not a validated or upload-ready DEX submission.
-- Findings are descriptive and should not be interpreted as evidence of causal relationships.
-- Production use would require current program-specific DEX specifications, funding-agreement requirements, security controls, governance approval and consultation with service teams and communities.
+This portfolio involved AI-assisted preparation and production. The case study presents the workflow, reporting outputs and interpretation; it does not imply that every script, formula or visual was independently authored without assistance.
 
-## Portfolio Purpose
+The public evidence currently consists of this narrative and the embedded screenshots. These support discussion of data quality, reporting choices and communication, but do not allow a reviewer to inspect calculations or refresh the model.
 
-This project was created to demonstrate practical capability in community-services data collection, Excel and Power Query cleaning, information management, DEX-aligned reporting, Power BI modelling, dashboard development, reconciliation, audit support and clear communication of technical information to non-technical users.
+## Limitations and Next Steps
+
+- All findings concern synthetic data, not actual clients, communities or service performance.
+- The source structures are Actionstep-like simulations, not operational system extracts.
+- DEX concepts are used for learning; the project is not a validated, upload-ready submission.
+- Existing outlet labels belong to the original fictional scenario. No South Australian coverage or unmet-need claim is made.
+- Outreach plans, communication examples and CRM adoption materials described here are illustrative extensions, not deployed activities.
+- The project does not demonstrate actual marketing budget management, campaign results, staff training or AIIM implementation.
+- Workbook formulas, model relationships, measures and refresh behaviour cannot currently be independently verified from this repository.
+
+**Planned improvements:** publish an appropriately reviewed synthetic data and model package; provide higher-resolution dashboard exports; validate matched outcome measures; and develop standalone outreach, reporting and staff-guidance samples. These are future additions, not files currently available for download.
 
